@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/main.css">
+    <script src="https://kit.fontawesome.com/bc194a3937.js" crossorigin="anonymous"></script>
     <title>Meetup</title>
 </head>
 
@@ -16,17 +17,23 @@
             <div class="left-side-header">
                 <a href="main.html"><img src="assets/images/Logo.png" alt="Logo"></a>
                 <form>
-                    <input type="text">
+                    <div class="input-box">
+                        <span><img src="assets/icons/search-icon.png" alt="search icon"></span>
+                        <input type="text" placeholder="Search event">
+                    </div>
                     <select name="location" id="events-cities">
                         <option value="Mountain View, CA">Mountain View, CA</option>
                         <option value="New York, NY">New York, NY</option>
                         <option value="Orlando, FL">Orlando, FL</option>
                     </select>
-                    <button type="submit" class="search-btn">иконка лупы</button>
+                    <button type="button" class="search-btn">
+                        <!-- убрал type submit что б устранить перезагрузку страницы без доп. кода в javascript -->
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </form>
             </div>
             <div class="right-side-header">
-                <button class="lang-btn">English</button>
+                <button class="lang-btn"><i class="fa-solid fa-globe"></i> English</button>
                 <button class="login-btn">Log in</button>
                 <button class="singup-btn">Sing up </button>
             </div>
@@ -124,7 +131,7 @@
                 <h2>Popular ciries on Meetup</h2>
                 <p>Looking for fun things to do near you? See what Meetup organizers are planning in cities around
                     the country.</p>
-                <div class="bootom-row">
+                <div class="bottom-row">
                     <div class="popular-card">
                         <img src="assets/images/popular-placeholder.png" alt="New York city">
                         <p>New York</p>
@@ -213,9 +220,16 @@
             <div class="social-links-row">
                 <div class="left-col">
                     <h3>Follow us</h3>
-
+                    <span><img src="assets/icons/facebook-icon.png" alt="facebook icon"></span>
+                    <span><img src="assets/icons/twitter-icon.png" alt="twitter icon"></span>
+                    <span><img src="assets/icons/youtube-icon.png" alt="youtube icon"></span>
+                    <span><img src="assets/icons/instagram-icon.png" alt="instagram icon"></span>
+                    <span><img src="assets/icons/tiktok-icon.png" alt="tik tok icon"></span>
                 </div>
-                <div class="right-col">google apple</div>
+                <div class="right-col">
+                    <span><img src="assets/icons/google-play-banner.png" alt="google play icon"></span>
+                    <span><img src="assets/icons/app-store-banner.png" alt="app store icon"></span>
+                </div>
             </div>
             <div class="copyright-bar">
                 <p>© 2024 Meetup</p>
