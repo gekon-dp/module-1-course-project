@@ -1,5 +1,4 @@
 /* Временно скрываем секции */
-.hero,
 .current-events,
 .future-events,
 .cta,
@@ -262,8 +261,8 @@ ul {
     background-color: #ffffff;
     border: 1px solid #d0d0d0;
     border-right: none;
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
 
   /* Текстовый инпут на десктопе */
@@ -313,8 +312,8 @@ ul {
     height: 42px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 
   /* Автоматический отступ слева сдвигает блок кнопок в самый правый край */
@@ -332,5 +331,108 @@ ul {
 
   .singup-btn {
     padding: 8px 16px !important;
+  }
+}
+
+/* =======================================
+   HERO SECTION 
+========================================== */
+.hero {
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 20px 0px;
+  padding-left: 21px;
+  padding-right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+}
+
+/* Левая колонка с текстом и кнопкой */
+.left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.left-col h1 {
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 1.22;
+  padding-bottom: 12px;
+  color: #212121;
+}
+
+.left-col p {
+  font-size: 12px;
+  line-height: 2;
+  padding-bottom: 2px;
+  color: #000000;
+}
+
+/* Кнопка «Join Meetup» */
+.left-col button {
+  align-self: flex-start; /* Кнопка не растягивается на всю ширину, а берет размер по контенту */
+  background-color: #00798a;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.left-col button:hover {
+  background-color: #005f6b;
+}
+
+/* Правая колонка с иллюстрацией */
+.right-col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.right-col img {
+  width: 100%;
+  max-width: 215px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =======================================
+     ДЕКСТОПНАЯ ВЕРСИЯ (ПК от 768px и выше)
+======================================= */
+@media (min-width: 768px) {
+  .hero {
+    padding: 64px 32px;
+    flex-direction: row; /* Переводим в горизонтальный ряд */
+    align-items: center;
+    justify-content: space-between;
+    gap: 54px;
+  }
+
+  .left-col {
+    max-width: 600px; /* Ограничиваем ширину текста, чтобы строки не были слишком длинными */
+    gap: 24px;
+  }
+
+  .left-col h1 {
+    font-size: 42px; /* Увеличиваем заголовок для больших экранов */
+  }
+
+  .left-col p {
+    font-size: 16px;
+  }
+
+  .right-col {
+    justify-content: flex-start;
+  }
+
+  .right-col img {
+    max-width: 379px; /* Делаем иллюстрацию крупнее на ПК */
   }
 }
