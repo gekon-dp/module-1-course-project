@@ -1,5 +1,4 @@
 /* Временно скрываем секции */
-.current-events,
 .future-events,
 .cta,
 .categories,
@@ -37,9 +36,10 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 392px;
-  margin: 0 auto;
-  padding: 0 16px;
+  max-width: 1920px; /* Ограничение сработает только на экранах шире 1920px */
+  min-width: 392px; /* Защита от сжатия на очень узких экранах */
+  margin: 0 auto; /* Центрирование контейнера на больших мониторах */
+  padding: 0 16px; /* Комфортные отступы для мобильных */
 }
 
 button {
@@ -58,8 +58,8 @@ ul {
 }
 
 /* =======================================
-   HEADER SECTION (Mobile-First по умолчанию)
-   ========================================== */
+   HEADER SECTION (Mobile-First)
+========================================== */
 
 /* Основной блок шапки */
 .header {
@@ -208,9 +208,9 @@ ul {
   cursor: pointer;
 }
 
-/* =======================================
-   ДЕКСТОПНАЯ ВЕРСИЯ (ПК от 768px и выше)
-   ======================================= */
+/* ====================================
+   DESKTOP HEADER
+======================================= */
 @media (min-width: 768px) {
   /* Фиксируем высоту шапки для десктопа */
   .header {
@@ -335,7 +335,7 @@ ul {
 }
 
 /* =======================================
-   HERO SECTION 
+   HERO SECTION (Mobile-First)
 ========================================== */
 .hero {
   max-width: 1196px;
@@ -360,7 +360,7 @@ ul {
   font-size: 25px;
   font-weight: bold;
   line-height: 1.22;
-  padding-bottom: 12px;
+
   color: #212121;
 }
 
@@ -403,8 +403,8 @@ ul {
   object-fit: contain;
 }
 
-/* =======================================
-     ДЕКСТОПНАЯ ВЕРСИЯ (ПК от 768px и выше)
+/* ====================================
+   DESKTOP HERO
 ======================================= */
 @media (min-width: 768px) {
   .hero {
@@ -422,17 +422,684 @@ ul {
 
   .left-col h1 {
     font-size: 42px; /* Увеличиваем заголовок для больших экранов */
+    padding-bottom: 1px;
   }
 
   .left-col p {
     font-size: 16px;
+    line-height: 1.5;
+    padding-right: 5px;
   }
 
   .right-col {
-    justify-content: flex-start;
+    display: block; /* Сбрасываем лишние флекс-свойства */
+    flex-shrink: 1; /* Не даем колонке сжиматься, если экран станет чуть меньше */
   }
 
   .right-col img {
     max-width: 379px; /* Делаем иллюстрацию крупнее на ПК */
+  }
+}
+
+/* ====================================
+   CURRENT EVENTS
+======================================= */
+.current-events {
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 20px 14px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Шапка (две колонки) */
+.current-events .top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.top-row__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.current-events h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212121;
+  margin: 0;
+}
+
+/* Обертка селекта (выполняет роль кнопки с фоном) */
+.events-near-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: rgb(151 202 209 / 12%); /* Цвет фона теперь здесь */
+  border-radius: 5px; /* Скругление теперь здесь */
+  padding: 8px 35px 8px 8px; /* Справа оставляем место под иконку */
+  cursor: pointer;
+}
+
+/* Сам селект становится прозрачным */
+.events-near {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  color: #00798a;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 0; /* Убираем лишние внутренние отступы селекта */
+}
+
+/* Иконка Font Awesome карандаша */
+.fa-pencil {
+  position: absolute;
+  right: 8px;
+  color: #00798a;
+  font-size: 12px;
+  pointer-events: none; /* Чтобы клик проходил сквозь иконку прямо на селект */
+}
+
+/* На мобильном ссылку скрываем */
+.see-all-link {
+  display: none;
+  color: #00798a;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.current-events .event-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Переключение текста участников */
+.desktop-going {
+  display: none !important;
+}
+
+.mobile-attendees {
+  display: inline !important;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "img date"
+    "img title"
+    "img theme"
+    "img badge-mobile"
+    "img footer";
+  column-gap: 7px;
+  align-items: start;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.event-image-wrapper {
+  grid-area: img;
+  width: 98px;
+  height: 65 px;
+}
+
+.event-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.badge-desktop {
+  display: none !important;
+}
+
+.badge-mobile {
+  grid-area: badge-mobile;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  color: #707070;
+  font-size: 8px;
+  font-weight: 500;
+  padding: 2px 0px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-top: 2px;
+}
+
+.badge-mobile img {
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
+}
+
+.event-date {
+  grid-area: date;
+  font-size: 9px;
+  font-weight: 500;
+  color: #7c6f50;
+  line-height: 1.36;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.event-date img {
+  display: none;
+}
+
+.event-title {
+  grid-area: title;
+  font-size: 10px;
+  font-weight: 500;
+  color: #212121;
+  line-height: 1.47;
+  padding: 2px 0px;
+}
+
+.event-theme {
+  grid-area: theme;
+  font-size: 9px;
+  line-height: 1.36;
+  color: #707070;
+}
+
+.event-footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #757575;
+  margin-top: 4px;
+}
+
+.event-people img,
+.desktop-going,
+.event-cost-wrap {
+  display: none;
+}
+
+.mobile-attendees {
+  display: inline-block !important;
+  padding-top: 28px;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* .event-cost-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+} */
+
+.event-footer img,
+.event-date img {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+}
+
+/* ====================================
+DESKTOP CURRENT EVENTS
+======================================= */
+@media (min-width: 768px) {
+  /* Переключаем текст на "going" */
+  .desktop-going {
+    display: inline !important;
+  }
+  .mobile-attendees {
+    display: none !important;
+  }
+
+  /* Показываем ссылку "See all events" на планшетах и ПК */
+  .see-all-link {
+    display: inline-block;
+  }
+
+  .current-events .top-row {
+    margin-bottom: 32px;
+  }
+
+  .current-events h2 {
+    font-size: 24px;
+  }
+
+  /* Настраиваем обертку селекта для ПК */
+  .events-near-wrapper {
+    padding: 8px 34px 8px 12px;
+    border-radius: 8px;
+  }
+
+  .events-near {
+    font-size: 15px;
+  }
+
+  /* Сетка на планшетах (2 колонки) */
+  .current-events .event-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  /* Карточка становится вертикальной */
+  .event {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "img"
+      "title"
+      "theme"
+      "date"
+      "footer";
+    row-gap: 6px;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .event-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 150px;
+  }
+
+  .badge-mobile {
+    display: none !important;
+  }
+
+  .badge-desktop {
+    display: flex !important;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #212121;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    gap: 3px;
+    z-index: 2;
+  }
+
+  .badge-desktop img {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+  }
+
+  .event-title {
+    font-size: 16px;
+    margin-top: 4px;
+  }
+
+  .event-date {
+    font-size: 13px;
+  }
+
+  /* ====================================
+   CURRENT EVENTS
+======================================= */
+  .current-events {
+    max-width: 1196px;
+    margin: 0 auto;
+    padding: 20px 14px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Шапка (две колонки) */
+  .current-events .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .top-row__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .current-events h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #212121;
+    margin: 0;
+  }
+
+  /* Обертка селекта (выполняет роль кнопки с фоном) */
+  .events-near-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: rgb(151 202 209 / 12%); /* Цвет фона теперь здесь */
+    border-radius: 5px; /* Скругление теперь здесь */
+    padding: 8px 35px 8px 8px; /* Справа оставляем место под иконку */
+    cursor: pointer;
+  }
+
+  /* Сам селект становится прозрачным */
+  .events-near {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    color: #00798a;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0; /* Убираем лишние внутренние отступы селекта */
+  }
+
+  /* Иконка Font Awesome карандаша */
+  .fa-pencil {
+    position: absolute;
+    right: 8px;
+    color: #00798a;
+    font-size: 12px;
+    pointer-events: none; /* Чтобы клик проходил сквозь иконку прямо на селект */
+  }
+
+  /* На мобильном ссылку скрываем */
+  .see-all-link {
+    display: none;
+    color: #00798a;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .current-events .event-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Переключение текста участников */
+  .desktop-going {
+    display: none !important;
+  }
+
+  .mobile-attendees {
+    display: inline !important;
+  }
+
+  .event {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "img date"
+      "img title"
+      "img theme"
+      "img badge-mobile"
+      "img footer";
+    column-gap: 7px;
+    align-items: start;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .event-image-wrapper {
+    grid-area: img;
+    width: 98px;
+    height: 65 px;
+  }
+
+  .event-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .badge-desktop {
+    display: none !important;
+  }
+
+  .badge-mobile {
+    grid-area: badge-mobile;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: transparent;
+    color: #707070;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 2px 0px;
+    border-radius: 4px;
+    width: fit-content;
+    margin-top: 2px;
+  }
+
+  .badge-mobile img {
+    width: 10px;
+    height: 10px;
+    object-fit: contain;
+  }
+
+  .event-date {
+    grid-area: date;
+    font-size: 9px;
+    font-weight: 500;
+    color: #7c6f50;
+    line-height: 1.36;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .event-date img {
+    display: none;
+  }
+
+  .event-title {
+    grid-area: title;
+    font-size: 10px;
+    font-weight: 500;
+    color: #212121;
+    line-height: 1.47;
+    padding: 2px 0px;
+  }
+
+  .event-theme {
+    grid-area: theme;
+    font-size: 9px;
+    line-height: 1.36;
+    color: #707070;
+  }
+
+  .event-footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #757575;
+    margin-top: 4px;
+  }
+
+  .event-people img,
+  .desktop-going,
+  .event-cost-wrap {
+    display: none;
+  }
+
+  .mobile-attendees {
+    display: inline-block !important;
+    padding-top: 28px;
+    font-size: 9px;
+    line-height: 1.4;
+  }
+
+  .event-cost-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .event-footer img,
+  .event-date img {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+  }
+
+  /* ====================================
+DESKTOP CURRENT EVENTS
+======================================= */
+  @media (min-width: 768px) {
+    /* Переключаем текст на "going" */
+    .desktop-going {
+      display: inline !important;
+    }
+
+    .mobile-attendees {
+      display: none !important;
+    }
+
+    /* Показываем ссылку "See all events" на планшетах и ПК */
+    .see-all-link {
+      display: inline-block;
+    }
+
+    .current-events .top-row {
+      margin-bottom: 32px;
+    }
+
+    .current-events h2 {
+      font-size: 24px;
+    }
+
+    /* Настраиваем обертку селекта для ПК */
+    .events-near-wrapper {
+      padding: 8px 34px 8px 12px;
+      border-radius: 8px;
+    }
+
+    .events-near {
+      font-size: 15px;
+    }
+
+    /* Сетка на планшетах (2 колонки) */
+    .current-events .event-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    /* Карточка становится вертикальной */
+    .event {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "img"
+        "title"
+        "theme"
+        "date"
+        "footer";
+      row-gap: 6px;
+      padding-bottom: 0;
+      border-top: none;
+    }
+
+    .event-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 150px;
+    }
+
+    .badge-mobile {
+      display: none !important;
+    }
+
+    .badge-desktop {
+      display: flex !important;
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #212121;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      align-items: center;
+      gap: 3px;
+      z-index: 2;
+    }
+
+    .badge-desktop img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .event-title {
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    .event-date {
+      font-size: 13px;
+    }
+
+    .event-footer {
+      margin-top: auto;
+    }
+    .event-footer img,
+    .event-date img,
+    .event-cost-wrap img {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+  }
+
+  /* =======================================
+     ДЕКСТОП (от 1024px и выше) — 4 колонки
+     ======================================= */
+  @media (min-width: 1024px) {
+    .current-events .event-cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+/* =======================================
+     ДЕКСТОП (от 1024px и выше) — 4 колонки
+     ======================================= */
+@media (min-width: 1024px) {
+  .current-events .event-cards {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

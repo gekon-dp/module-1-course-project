@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://kit.fontawesome.com/bc194a3937.js" crossorigin="anonymous"></script>
+    <title>Meetup</title>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="left-side-header">
+                <a href="main.html">
+                    <img src="assets/images/Logo.png" alt="Logo" />
+                </a>
+                <form>
+                    <div class="input-box">
+                        <span>
+                            <img src="assets/icons/search-icon.png" alt="search icon" />
+                        </span>
+                        <input type="text" placeholder="Search event" />
+                    </div>
+                    <select name="location" id="events-cities">
+                        <option value="Mountain View, CA">Mountain View, CA</option>
+                        <option value="New York, NY">New York, NY</option>
+                        <option value="Orlando, FL">Orlando, FL</option>
+                    </select>
+                    <button type="button" class="search-btn">
+                        <!-- убрал type submit что б устранить перезагрузку страницы без доп. кода в javascript -->
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="right-side-header">
+                <button class="lang-btn">
+                    <i class="fa-solid fa-globe"></i>
+                    English
+                </button>
+                <button class="login-btn">Log in</button>
+                <button class="singup-btn">Sing up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент страницы -->
+    <main class="main">
+        <!-- <div class="container"> -->
+
+        <section class="hero">
+            <div class="left-col">
+                <h1>The people platform—Where interests become friendships</h1>
+                <p>
+                    Whatever your interest, from hiking and reading to networking and
+                    skill sharing, there are thousands of people who share it on Meetup.
+                    Events are happening every day—sign up to join the fun.
+                </p>
+                <button>Join Meetup</button>
+            </div>
+            <div class="right-col">
+                <img src="assets/images/hero-right-img.png" alt="People on bicecle" />
+            </div>
+        </section>
+
+        <section class="current-events">
+            <div class="container">
+                <!-- Шапка секции (снаружи карточек) -->
+                <div class="top-row">
+                    <div class="top-row__left">
+                        <h2>Events near</h2>
+                        <div class="events-near-wrapper">
+                            <select name="location" class="events-near">
+                                <option value="Mountain View, CA">Mountain View, CA</option>
+                                <option value="New York, NY">New York, NY</option>
+                                <option value="Orlando, FL">Orlando, FL</option>
+                            </select>
+                            <i class="fa-solid fa-pencil"></i>
+                        </div>
+                    </div>
+                    <a href="#" class="see-all-link">See all events</a>
+                </div>
+
+                <!-- Контейнер для карточек -->
+                <div class="event-cards">
+                    <!-- Карточка события 1 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-1.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Mon, Mar 18 · 7:00 PM PDT
+                        </span>
+                        <h3 class="event-title">Day Trading Idea and Strategy</h3>
+                        <p class="event-theme">Business (5 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">1 going</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 2-->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-2.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Tue, Mar 19 · 5:00 PM PDT
+                        </span>
+                        <h3 class="event-title">
+                            Let's Talk Networking: JPMorgan Chase in Palo Alto
+                        </h3>
+                        <p class="event-theme">Business (25 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">41 going</span>
+                                <span class="mobile-attendees">99 attendees</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 3 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-3.png" alt="event image" />
+                            <div class="badge-desktop">
+                                <img src="assets/icons/movie-icon.png" alt="icon" />
+                                Online Event
+                            </div>
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Wed, Mar 13 · 6:00 PM PDT
+                        </span>
+                        <h3 class="event-title">
+                            Tech Talks & Quiz: Next- Gen Database Solutions for Emerging Use
+                            Cases
+                        </h3>
+                        <p class="event-theme">Technology</p>
+                        <span class="badge-mobile">
+                            <img src="assets/icons/movie-icon.png" alt="icon" />
+                            Online Event
+                        </span>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">40 going</span>
+                                <span class="mobile-attendees">99 attendees</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 4 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-4.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Thu, Mar 28 · 5:00 PM PDT
+                        </span>
+                        <h3 class="event-title">
+                            INFORMS San Francisco Chapter In-Person Event
+                        </h3>
+                        <p class="event-theme">Health and Wellbeing (50 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">41 going</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 5 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-5.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Wed, Mar 13 · 6:30 PM PDT
+                        </span>
+                        <h3 class="event-title">AI Wednesdays - Meet and Greet!</h3>
+                        <p class="event-theme">Technology (5 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">29 going</span>
+                                <span class="mobile-attendees">99 attendees</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 6 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-6.png" alt="event image" />
+                            <div class="badge-desktop">
+                                <img src="assets/icons/movie-icon.png" alt="icon" />
+                                Online Event
+                            </div>
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Thu, Mar 21 · 6:00 PM PDT
+                        </span>
+                        <h3 class="event-title">ROS By-The-Bay March 2024</h3>
+                        <p class="event-theme">Social Activities</p>
+                        <span class="badge-mobile">
+                            <img src="assets/icons/movie-icon.png" alt="icon" />
+                            Online Event
+                        </span>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">51 going</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 7 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-7.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Fri, Mar 29 · 6:00 PM PDT
+                        </span>
+                        <h3 class="event-title">Free Christian Singles' Dinner</h3>
+                        <p class="event-theme">Hobbies and Passions (10 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">11 going</span>
+                                <span class="mobile-attendees">99 attendees</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Карточка события 8 -->
+                    <div class="event">
+                        <!-- Блок картинки и бейджа -->
+                        <div class="event-image-wrapper">
+                            <img src="assets/images/event-8.png" alt="event image" />
+                        </div>
+
+                        <!-- Блок текста с грид-зонами -->
+                        <span class="event-date">
+                            <img src="assets/icons/date-icon.png" alt="date" />
+                            Thu, Mar 14 · 5:00 PM PDT
+                        </span>
+                        <h3 class="event-title">
+                            In-person: Deep Dive into RAG Architectures (Food served)
+                        </h3>
+                        <p class="event-theme">Hobbies and Passions (50 km)</p>
+
+                        <div class="event-footer">
+                            <span class="event-people">
+                                <img src="assets/icons/check-icon.png" alt="check" />
+                                <span class="desktop-going">16 going</span>
+                                <span class="mobile-attendees">99 attendees</span>
+                            </span>
+                            <span class="event-cost-wrap">
+                                <img src="assets/icons/cost-icon.png" alt="cost" />
+                                <span class="event-cost">Free</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="future-events">
+            <div class="top-row">
+                <h2>Events near</h2>
+                <a href="#">See all events</a>
+            </div>
+            <div class="event-cards">
+                <div class="event">
+                    <div class="badge">
+                        <span>
+                            <img src="assets/icons/movie-icon.png" alt="online event badge" />
+                            Online Event
+                        </span>
+                    </div>
+                    <img src="assets/images/event-placeholder.png" alt="event Logo" />
+                    <h3 class="event-title">Day Trading Idea and Strategy</h3>
+                    <p class="event-theme">Business (5km)</p>
+                    <p class="event-date">
+                        <span>
+                            <img src="assets/icons/date-icon.png" alt="date icon" />
+                        </span>
+                        Mon, Mar 18 · 7:00 PM PDT
+                    </p>
+                    <p class="event-people">
+                        <span>
+                            <img src="assets/icons/check-icon.png" alt="date icon" />
+                        </span>
+                        1 going
+                    </p>
+                    <p class="event-cost">
+                        <span>
+                            <img src="assets/icons/cost-icon.png" alt="date icon" />
+                        </span>
+                        Free
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="left-col">
+                <h2>Join Meetup</h2>
+                <p>
+                    People use Meetup to meet new people, learn new things, find
+                    support, get out of their comfort zones, and pursue their passions,
+                    together. Membership is free.
+                </p>
+                <button>Sing up</button>
+            </div>
+            <div class="right-col">
+                <img src="assets/images/hero-right-img.png" alt="People on bicecle" />
+            </div>
+        </section>
+
+        <section class="categories">
+            <h2>Explore top categories</h2>
+            <div class="bottom-row">
+                <div class="category-card">
+                    <span>
+                        <img src="assets/icons/movie-icon.png" alt="online event badge" />
+                    </span>
+                    <p>Travel and Outdoor</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="popular">
+            <h2>Popular ciries on Meetup</h2>
+            <p>
+                Looking for fun things to do near you? See what Meetup organizers are
+                planning in cities around the country.
+            </p>
+            <div class="bottom-row">
+                <div class="popular-card">
+                    <img src="assets/images/popular-placeholder.png" alt="New York city" />
+                    <p>New York</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq">
+            <h2>How Meetup works</h2>
+            <div class="bottom-row">
+                <div class="discover-card">
+                    <div class="icon-col">
+                        <span>
+                            <img src="assets/icons/movie-icon.png" alt="online event badge" />
+                        </span>
+                    </div>
+                    <div class="text-col">
+                        <p class="faq-title">Discover events and groups</p>
+                        <p class="faq-description">
+                            See who's hosting local events for all the things you love
+                        </p>
+                        <a href="#">Search events and groups</a>
+                    </div>
+                </div>
+                <div class="create-card">
+                    <div class="icon-col">
+                        <span>
+                            <img src="assets/icons/movie-icon.png" alt="online event badge" />
+                        </span>
+                    </div>
+                    <div class="text-col">
+                        <p class="faq-title">Discover events and groups</p>
+                        <p class="faq-description">
+                            See who's hosting local events for all the things you love
+                        </p>
+                        <a href="#">Search events and groups</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog">
+            <h2>Friendships are made on Meetup</h2>
+            <p>
+                Since 2002, members have used Meetup to make new friends, meet
+                like-minded people, spend time on hobbies, and connect with locals
+                over shared interests. Learn how.
+            </p>
+            <div class="posts">
+                <div class="post-card">
+                    <img src="assets/images/post-placeholder.png" alt="post logo" />
+                    <h3 class="post-title">I Used Meetup to Make Friends at Brunch</h3>
+                    <p class="post-description">
+                        New Jersey-based writer and college student Brianna Stryker wanted
+                        to meet friends in her hometown. Learn how she used Meetup to make
+                        connections by joining a Girls Night Out Meetup group.
+                    </p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+        </section>
+        <!-- </div> -->
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="footer">
+        <div class="container">
+            <div class="top-row">
+                <p>Create your own Meetup group.</p>
+                <button>Get Started</button>
+            </div>
+            <div class="nav-links-row">
+                <div class="left-col">
+                    <h3></h3>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="middle-col">
+                    <h3></h3>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="right-col">
+                    <h3></h3>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="social-links-row">
+                <div class="left-col">
+                    <h3>Follow us</h3>
+                    <span>
+                        <img src="assets/icons/facebook-icon.png" alt="facebook icon" />
+                    </span>
+                    <span>
+                        <img src="assets/icons/twitter-icon.png" alt="twitter icon" />
+                    </span>
+                    <span>
+                        <img src="assets/icons/youtube-icon.png" alt="youtube icon" />
+                    </span>
+                    <span>
+                        <img src="assets/icons/instagram-icon.png" alt="instagram icon" />
+                    </span>
+                    <span>
+                        <img src="assets/icons/tiktok-icon.png" alt="tik tok icon" />
+                    </span>
+                </div>
+                <div class="right-col">
+                    <span>
+                        <img src="assets/icons/google-play-banner.png" alt="google play icon" />
+                    </span>
+                    <span>
+                        <img src="assets/icons/app-store-banner.png" alt="app store icon" />
+                    </span>
+                </div>
+            </div>
+            <div class="copyright-bar">
+                <p>© 2024 Meetup</p>
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
