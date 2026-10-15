@@ -1,5 +1,4 @@
 /* Временно скрываем секции */
-.cta,
 .categories,
 .popular,
 .faq,
@@ -36,9 +35,9 @@ body {
   flex-direction: column;
   width: 100%;
   max-width: 1920px; /* Ограничение сработает только на экранах шире 1920px */
-  min-width: 392px; /* Защита от сжатия на очень узких экранах */
+  /* min-width: 392px; */ /* Защита от сжатия на очень узких экранах */
   margin: 0 auto; /* Центрирование контейнера на больших мониторах */
-  padding: 0 16px; /* Комфортные отступы для мобильных */
+  /* padding: 0 18px; */ /* Комфортные отступы для мобильных */
 }
 
 button {
@@ -59,11 +58,10 @@ ul {
 /* =======================================
    HEADER SECTION (Mobile-First)
 ========================================== */
-
 /* Основной блок шапки */
 .header {
   border-bottom: 1px solid #e0e0e0; /* Временная граница для разделения */
-  padding: 8px 12px;
+  padding: 8px 18px;
 }
 
 /* Главный контейнер: на мобилках превращается в Grid-сетку из 2 рядов */
@@ -214,7 +212,7 @@ ul {
   /* Фиксируем высоту шапки для десктопа */
   .header {
     height: 64px;
-    padding: 11px 0;
+    padding: 11px 32px;
     display: flex;
     align-items: center;
   }
@@ -223,7 +221,7 @@ ul {
   .header .container {
     max-width: 1920px;
     margin: 0 auto;
-    padding: 0 32px;
+    /* padding: 0 32px; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -339,9 +337,9 @@ ul {
 .hero {
   max-width: 1196px;
   margin: 0 auto;
-  padding: 20px 0px;
-  padding-left: 21px;
-  padding-right: 14px;
+  padding: 20px 18px;
+  /* padding-left: 21px;
+  padding-right: 14px; */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -447,7 +445,7 @@ ul {
 .future-events {
   max-width: 1196px;
   margin: 0 auto;
-  padding: 20px 14px;
+  padding: 20px 18px;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -664,6 +662,11 @@ ul {
 DESKTOP CURRENT anв FUTURE EVENTS
 ======================================= */
 @media (min-width: 768px) {
+  .current-events,
+  .future-events {
+    padding: 20px 32px;
+  }
+
   /* Переключаем текст на "going" */
   .desktop-going {
     display: inline !important;
@@ -809,5 +812,132 @@ DESKTOP CURRENT anв FUTURE EVENTS
   .current-events .event-cards,
   .future-events .event-cards {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ====================================
+   CTA (Mobile-first)
+======================================= */
+.cta {
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 16px 18px;
+  background-color: #f7fbfb;
+  display: flex;
+  flex-direction: column;
+}
+
+/* «Растворяем» обертку на мобильном, чтобы дети стали элементами секции .cta */
+.left-col {
+  display: contents;
+}
+
+/* Настраиваем порядок (order) для мобильных устройств */
+.cta h2 {
+  order: 1;
+  font-size: 20px;
+  font-weight: 600;
+  color: #212121;
+  /* margin: 0 0 16px 0; */
+}
+
+.right-col {
+  display: flex;
+  justify-content: center;
+  order: 2;
+  width: 100%;
+}
+
+.cta .right-col img {
+  width: 100%;
+  max-width: 238px;
+  height: auto;
+  object-fit: contain;
+  margin: 6px 0px;
+}
+
+.cta p {
+  order: 3;
+  font-size: 12px;
+  line-height: 2;
+  color: #000;
+  margin: 0 0 22px 0;
+}
+
+.cta button {
+  order: 4;
+  background-color: #e32359; /* Фирменный цвет кнопки */
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px 67px;
+  border: none;
+  border-radius: 8px;
+  width: fit-content;
+  transition: background-color 0.2s ease;
+  align-self: center;
+}
+
+.cta button:hover {
+  background-color: #e04343;
+}
+
+/* ====================================
+ДЕКСТОП И ПЛАНШЕТЫ (от 768px и выше)
+======================================= */
+@media (min-width: 768px) {
+  .cta {
+    flex-direction: row; /* Две колонки через флекс */
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 40px; */
+    /* padding: 50px 32px; */
+    padding: 36px 56px;
+  }
+
+  /* Возвращаем блоку .left-col свойства колонки */
+  .left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    order: 1; /* Текст слева */
+    gap: 16px;
+  }
+
+  .right-col {
+    flex: 1;
+    order: 2; /* Картинка справа */
+    margin: 0;
+    justify-content: flex-end;
+  }
+
+  .cta .right-col img {
+    width: 100%;
+    max-width: 341px;
+    height: auto;
+    margin: 0px;
+  }
+
+  /* Возвращаем стандартный порядок элементов внутри левой колонки для ПК */
+  .cta h2 {
+    order: 1;
+    font-size: 28px;
+    /* margin-bottom: 16px; */
+    font-weight: 600;
+  }
+
+  .cta p {
+    order: 2;
+    font-size: 16px;
+    /* margin-bottom: 24px; */
+    margin: 0;
+    color: #212121;
+    padding: 0px;
+  }
+
+  .cta button {
+    order: 3;
+    align-self: flex-start;
   }
 }
