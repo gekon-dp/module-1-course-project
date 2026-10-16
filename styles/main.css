@@ -1,5 +1,4 @@
 /* Временно скрываем секции */
-.categories,
 .popular,
 .faq,
 .blog,
@@ -60,7 +59,6 @@ ul {
 ========================================== */
 /* Основной блок шапки */
 .header {
-  border-bottom: 1px solid #e0e0e0; /* Временная граница для разделения */
   padding: 8px 18px;
 }
 
@@ -939,5 +937,120 @@ DESKTOP CURRENT anв FUTURE EVENTS
   .cta button {
     order: 3;
     align-self: flex-start;
+  }
+}
+
+/* =======================================
+   СЕКЦИЯ CATEGORIES (Flexbox с плавной адаптивностью)
+   ======================================= */
+.categories {
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 15px 18px 48px;
+  background-color: #ffffff;
+}
+
+.categories h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 23px;
+}
+
+.categories .bottom-row {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 11px;
+  column-gap: 23px;
+  padding: 0 17px;
+}
+
+/* 1. Базовые стили и мобильная версия (< 480px) — 2 колонки */
+.category-card {
+  flex: 0 0 calc(50% - 12px);
+  background-color: #f8fafb;
+  padding: 22px 28px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 12px;
+  cursor: pointer;
+  /* box-sizing: border-box; */
+  transition: background-color 0.2s ease;
+}
+
+.category-card:hover {
+  background-color: #f0f4f5;
+}
+
+.category-card span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.category-card span img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-card p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #212121;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 2. От 480px и выше — 3 колонки */
+@media (min-width: 480px) {
+  .category-card {
+    flex: 0 0 calc(33.333% - 16px);
+  }
+}
+
+/* 3. От 768px и выше — 4 колонки */
+@media (min-width: 768px) {
+  .categories h2 {
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+
+  .category-card {
+    flex: 0 0 calc(25% - 18px);
+    padding: 20px 12px;
+  }
+}
+
+/* 4. От 1024px и выше — 8 колонок в 1 ряд */
+@media (min-width: 1024px) {
+  .categories {
+    padding: 64px 18px;
+    background-color: #ffffff;
+  }
+
+  .categories h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .categories .bottom-row {
+    column-gap: 16px;
+    flex-wrap: nowrap;
+    padding: 0;
+  }
+
+  .category-card {
+    flex: 1;
+    padding: 22px 19px 16px;
+  }
+
+  .category-card p {
+    font-size: 16px;
   }
 }
