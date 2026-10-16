@@ -1,5 +1,4 @@
 /* Временно скрываем секции */
-.faq,
 .blog,
 footer {
   display: none;
@@ -1099,7 +1098,6 @@ POPULAR CITIES (Flexbox)
   text-align: center;
   gap: 18px;
   cursor: pointer;
-  /* box-sizing: border-box; */
 }
 
 /* Круглая картинка */
@@ -1162,5 +1160,139 @@ POPULAR CITIES (Flexbox)
 
   .popular-card p {
     font-size: 20px; /* Чуть компактнее на десктопе, если карточек много */
+  }
+}
+/* ====================================
+HOW MEETUP WORKS (FAQ)
+======================================= */
+.faq {
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 24px 18px;
+  background-color: #ffffff;
+}
+
+.faq h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 18px;
+}
+
+/* Контейнер карточек: на мобильном колонкой (1 карточка в ряд) */
+.faq .bottom-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Общие стили для карточки */
+.discover-card,
+.create-card {
+  background-color: rgba(151, 202, 209, 0.08); /* Светлый фон из макета */
+  padding: 20px 70px 15px 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.discover-card:hover,
+.create-card:hover {
+  transform: scale(1.03);
+}
+
+/* Колонка с иконкой */
+.faq .icon-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.faq .fa-plus,
+.faq .fa-magnifying-glass {
+  font-size: 25px;
+  color: #00798a; /* Фирменный бирюзовый цвет иконок Meetup */
+}
+
+/* Колонка с текстом */
+.faq .text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.faq-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #212121;
+  margin: 0;
+}
+
+.faq-description {
+  font-size: 10px;
+  color: #757575;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Ссылка внутри карточки */
+.faq .text-col a {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #00798a;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.faq .text-col a:hover {
+  text-decoration: underline;
+}
+
+/* =======================================
+ДЕКСТОП И ПЛАНШЕТЫ (от 768px и выше) — 2 колонки
+======================================= */
+@media (min-width: 768px) {
+  .faq h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  /* Переводим контейнер в строку — получаем 2 колонки */
+  .faq .bottom-row {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  /* Каждая карточка занимает ровно половину ширины */
+  .discover-card,
+  .create-card {
+    flex: 1;
+    padding: 32px 112px 24px 24px;
+    gap: 24px;
+  }
+
+  .faq .fa-plus,
+  .faq .fa-magnifying-glass {
+    font-size: 41px;
+  }
+
+  /* Колонка с текстом */
+  .faq .text-col {
+    gap: 16px;
+  }
+  .faq-title {
+    font-size: 20px;
+  }
+
+  .faq-description {
+    font-size: 16px;
+    color: #212121;
+  }
+
+  /* Ссылка внутри карточки */
+  .faq .text-col a {
+    font-size: 16px;
   }
 }
