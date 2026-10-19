@@ -1,7 +1,3 @@
-/* Временно скрываем секции */
-footer {
-  display: none;
-}
 /* =======================================
 GLOBAL STYLES & RESET
 ========================================== */
@@ -129,6 +125,10 @@ ul {
   padding: 7px 14px !important;
 }
 
+.singup-btn:hover {
+  background-color: #005f6b !important;
+}
+
 /* Форма поиска (2-й ряд, растягивается на всю ширину сетки) */
 .left-side-header form {
   grid-row: 2;
@@ -140,6 +140,7 @@ ul {
 
 /* На мобильных устройствах выпадающий список городов скрываем */
 #events-cities {
+  cursor: pointer;
   display: none;
 }
 
@@ -198,6 +199,10 @@ ul {
   font-size: 15px;
   border: none;
   cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: #e04343;
 }
 
 /* ====================================
@@ -340,13 +345,13 @@ ul {
 }
 
 /* Левая колонка с текстом и кнопкой */
-.left-col {
+.hero .left-col {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.left-col h1 {
+.hero .left-col h1 {
   font-size: 25px;
   font-weight: bold;
   line-height: 1.22;
@@ -354,7 +359,7 @@ ul {
   color: #212121;
 }
 
-.left-col p {
+.hero .left-col p {
   font-size: 12px;
   line-height: 2;
   padding-bottom: 2px;
@@ -362,7 +367,7 @@ ul {
 }
 
 /* Кнопка «Join Meetup» */
-.left-col button {
+.hero .left-col button {
   align-self: flex-start; /* Кнопка не растягивается на всю ширину, а берет размер по контенту */
   background-color: #00798a;
   color: #ffffff;
@@ -375,18 +380,18 @@ ul {
   transition: background-color 0.2s ease;
 }
 
-.left-col button:hover {
+.hero .left-col button:hover {
   background-color: #005f6b;
 }
 
 /* Правая колонка с иллюстрацией */
-.right-col {
+.hero .right-col {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.right-col img {
+.hero .right-col img {
   width: 100%;
   max-width: 215px;
   height: auto;
@@ -405,28 +410,28 @@ ul {
     gap: 54px;
   }
 
-  .left-col {
+  .hero .left-col {
     max-width: 600px; /* Ограничиваем ширину текста, чтобы строки не были слишком длинными */
     gap: 24px;
   }
 
-  .left-col h1 {
+  .hero .left-col h1 {
     font-size: 42px; /* Увеличиваем заголовок для больших экранов */
     padding-bottom: 1px;
   }
 
-  .left-col p {
+  .hero .left-col p {
     font-size: 16px;
     line-height: 1.5;
     padding-right: 5px;
   }
 
-  .right-col {
+  .hero .right-col {
     display: block; /* Сбрасываем лишние флекс-свойства */
     flex-shrink: 1; /* Не даем колонке сжиматься, если экран станет чуть меньше */
   }
 
-  .right-col img {
+  .hero .right-col img {
     max-width: 379px; /* Делаем иллюстрацию крупнее на ПК */
   }
 }
@@ -836,10 +841,9 @@ DESKTOP CURRENT anв FUTURE EVENTS
   font-size: 20px;
   font-weight: 600;
   color: #212121;
-  /* margin: 0 0 16px 0; */
 }
 
-.right-col {
+.cta .right-col {
   display: flex;
   justify-content: center;
   order: 2;
@@ -894,7 +898,7 @@ DESKTOP CURRENT anв FUTURE EVENTS
   }
 
   /* Возвращаем блоку .left-col свойства колонки */
-  .left-col {
+  .cta .left-col {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -903,7 +907,7 @@ DESKTOP CURRENT anв FUTURE EVENTS
     gap: 16px;
   }
 
-  .right-col {
+  .cta .right-col {
     flex: 1;
     order: 2; /* Картинка справа */
     margin: 0;
@@ -1419,5 +1423,237 @@ HOW MEETUP WORKS (FAQ)
   .post-card a {
     font-size: 16px;
     margin-bottom: 30px;
+  }
+}
+
+/* =======================================
+   FOOTER SECTION (По точному макету)
+   ======================================= */
+.footer {
+  background-color: #212121;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.footer .container {
+  display: flex;
+  flex-direction: column;
+  /* gap: 32px; */
+  max-width: 1196px;
+  padding: 24px 18px;
+  margin: 0 auto;
+}
+
+/* 1-й ряд: Текст и кнопка на одной строке */
+.footer .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 24px;
+  margin-bottom: 34px;
+}
+
+.footer .top-row p {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.footer-cta-btn {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  border: 2px solid #ffffff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 2-й ряд: 3 колонки навигации остаются в ряд */
+.footer .nav-links-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.footer .nav-links-row > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.footer .nav-links-row h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #f6f7f8;
+}
+
+.footer .nav-links-row ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.footer .nav-links-row a {
+  color: #c5c4c4;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer .nav-links-row a:hover {
+  color: #ffffff;
+}
+
+/* 3-й ряд: Соцсети слева, а правая колонка (маркетплейсы) скрыта на мобильном */
+.footer .social-links-row {
+  display: flex;
+  flex-direction: column;
+  /* gap: 12px; */
+  margin-bottom: 48px;
+}
+
+.footer .social-links-row .left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.footer .social-links-row h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #f6f7f8;
+}
+
+.footer .social-icons {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.social-icons svg {
+  font-size: 24px;
+  align-self: center;
+}
+
+.footer .social-icons a {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+/* Скрываем правую колонку 3-го ряда на мобильном */
+.footer .social-links-row .right-col {
+  display: none;
+}
+
+/* 4-й ряд: Только копирайт слева, список правовых ссылок скрыт на мобильном */
+.copyright-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.copyright-bar p {
+  margin: 0;
+}
+
+/* Скрываем список ссылок в 4-м ряду на мобильном */
+.copyright-bar ul {
+  display: none;
+}
+
+/* ====================================
+     ПК ВЕРСИЯ (от 768px и выше)
+======================================= */
+@media (min-width: 768px) {
+  .footer .social-links-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  .footer .top-row {
+    justify-content: flex-start;
+    gap: 40px;
+    margin-bottom: 24px;
+  }
+
+  .footer .nav-links-row {
+    gap: 0px;
+    margin-bottom: 36px;
+  }
+
+  .footer .social-links-row .left-col {
+    display: flex;
+    /* Выстраиваем заголовок и блок с иконками вертикально друг под другом */
+    flex-direction: column;
+    /* Выберите ОДИН из вариантов ниже: */
+
+    /* Вариант А: Если хотите прижать иконки к НИЗУ (вровень с правой колонкой) */
+    justify-content: flex-end;
+
+    /* Вариант Б: Если хотите оставить их по ЦЕНТРУ вертикали */
+    /* justify-content: center; */
+  }
+
+  /* Показываем маркетплейсы в 3-м ряду на ПК */
+  .footer .social-links-row .right-col {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 22px;
+  }
+
+  .store-badge img {
+    height: 38px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Показываем правовые ссылки в 4-м ряду на ПК (справа) */
+  .copyright-bar {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 14px;
+    margin-bottom: 0;
+  }
+
+  .copyright-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .copyright-bar a {
+    color: #c4c4c4;
+    text-decoration: none;
+  }
+
+  .copyright-bar a:hover {
+    text-decoration: underline;
   }
 }
