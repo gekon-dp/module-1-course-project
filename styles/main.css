@@ -972,6 +972,16 @@ DESKTOP CURRENT anв FUTURE EVENTS
 /* 1. Базовые стили и мобильная версия (< 480px) — 2 колонки */
 .category-card {
   flex: 0 0 calc(50% - 12px);
+
+  /* Фиксируем ширину железно: */
+  min-width: calc(50% - 12px);
+  max-width: calc(50% - 12px);
+
+  /* Защита от вылезания длинных слов: */
+  word-break: break-word; /* Переносит слишком длинные слова */
+  overflow-wrap: anywhere;
+
+  /* Ваши остальные стили: */
   background-color: #f8fafb;
   padding: 22px 28px 16px;
   display: flex;
@@ -981,7 +991,6 @@ DESKTOP CURRENT anв FUTURE EVENTS
   text-align: center;
   gap: 12px;
   cursor: pointer;
-  /* box-sizing: border-box; */
   transition: background-color 0.2s ease;
 }
 
@@ -1015,6 +1024,8 @@ DESKTOP CURRENT anв FUTURE EVENTS
 @media (min-width: 480px) {
   .category-card {
     flex: 0 0 calc(33.333% - 16px);
+    min-width: calc(33.333% - 16px);
+    max-width: calc(33.333% - 16px);
   }
 }
 
@@ -1027,6 +1038,8 @@ DESKTOP CURRENT anв FUTURE EVENTS
 
   .category-card {
     flex: 0 0 calc(25% - 18px);
+    min-width: calc(25% - 18px);
+    max-width: calc(25% - 18px);
     padding: 20px 12px;
   }
 }
@@ -1050,8 +1063,11 @@ DESKTOP CURRENT anв FUTURE EVENTS
   }
 
   .category-card {
-    flex: 1;
+    /* flex: 1; */
     padding: 22px 19px 16px;
+    flex: 1 1 calc(12.5% - 14px);
+    min-width: 0;
+    max-width: none;
   }
 
   .category-card p {
