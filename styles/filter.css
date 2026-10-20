@@ -1,5 +1,44 @@
+/* styles/filter.css */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.events-list .event {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-template-areas:
+    "img date"
+    "img title"
+    "img theme"
+    "img footer";
+  column-gap: 16px;
+  row-gap: 4px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.events-list .event.event-past {
+  opacity: 0.75;
+}
+
+.events-list .event-image-wrapper {
+  grid-area: img;
+  width: 100%;
+  height: 100px;
+}
+
+.events-list .event-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }

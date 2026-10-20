@@ -65,3 +65,39 @@ const eventsStore = [
     distance: 15,
   },
 ];
+
+const eventsContainer = document.getElementById("events-container");
+
+function formatDate(dateObj) {
+  const options = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  };
+  return dateObj.toLocaleDateString("en-US", options).toUpperCase();
+}
+
+function renderEvents(eventsToRender) {
+  if (!eventsContainer) return;
+  eventsContainer.innerHTML = "";
+  const now = new Date();
+
+  eventsToRender.forEach((event) => {
+    const card = document.createElement("div");
+    const isPast = event.date < now;
+    card.className = isPast ? "event event-past" : "event";
+    card.innerHTML = `
+      <div class="event-image-wrapper">
+        <img src="${event.image}" alt="${event.title}" />
+      </div>
+      <div class="event-date"><span>${formatDate(event.date)}</span></div>
+      <h3 class="event-title">${event.title}</h3>
+    `;
+    eventsContainer.appendChild(card);
+  });
+}
+
+renderEvents(eventsStore);
