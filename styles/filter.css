@@ -1,5 +1,328 @@
-* {
+/* .events-main {
+  background-color: #ffffff;
+  padding: 24px 0 48px;
+} */
+
+.events-main .container {
+  max-width: 1196px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 10px 18px 48px;
+}
+
+.events-header-section h1 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 16px;
+}
+
+/* Кнопки-вкладки */
+.events-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
+}
+
+.events-tabs .tab-link {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #707070;
+  cursor: pointer;
+  padding-bottom: 12px;
+  position: relative;
+  outline: none;
+}
+
+.events-tabs .tab-link:hover {
+  color: #212121;
+}
+
+.events-tabs .tab-link.active {
+  color: #00798a;
+}
+
+/* Бирюзовое подчеркивание активной вкладки */
+.events-tabs .tab-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #00798a;
+}
+
+/* Управление видимостью панелей */
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* ====================================
+FILTER BAR
+======================================= */
+.filters-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filters-bar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.filters-bar::-webkit-scrollbar-track {
+  background: #7d7d7d;
+  border-radius: 4px;
+}
+
+.filters-bar::-webkit-scrollbar-thumb {
+  background: #7d7d7d;
+  border-radius: 4px;
+}
+
+.filter-select {
+  flex-shrink: 0;
+  padding: 16px 42px 16px 16px;
+  text-indent: 2px; /* смещение текста, первая буква пряталась */
+  white-space: nowrap;
+  min-width: max-content;
+  border: none;
+  border-radius: 40px;
+  background-color: #f6f7f8;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212121;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23212121%22%20d%3D%22M7.41%208.59L12%2013.17l4.59-4.58L18%2010l-6%206-6-6%201.41-1.41z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.filter-select:hover {
+  background-color: #ebecec;
+}
+
+/* ====================================
+MOBILE EVENTS LIST
+======================================= */
+.events-page-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  /* gap: 20px; */
+}
+
+.events-sidebar {
+  display: none;
+}
+
+.events-list .event {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-template-areas:
+    "img date"
+    "img title"
+    "img theme"
+    "img footer";
+  column-gap: 16px;
+  row-gap: 4px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid #e0e0e0;
+  background-color: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.events-list .event:hover {
+  transform: none;
+}
+
+/* Стили для прошедших ивентов */
+.events-list .event.event-past {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.events-list .event.event-past:hover {
+  transform: none;
+  cursor: default;
+}
+
+.events-list .event-image-wrapper {
+  position: relative;
+  grid-area: img;
+  width: 100%;
+  height: 100px;
+}
+
+.events-list .event-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.events-list .event-date {
+  grid-area: date;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7c6f50;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.events-list .event-title {
+  grid-area: title;
+  font-size: 16px;
+  font-weight: 700;
+  color: #212121;
+  line-height: 1.3;
+  margin: 2px 0 4px 0;
+}
+
+.events-list .event-theme {
+  grid-area: theme;
+  font-size: 13px;
+  color: #707070;
+  line-height: 1.4;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+}
+
+/* ФУТЕР КАРТОЧКИ С ДОП. ПОЛЯМИ */
+.events-list .event-footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  font-size: 13px;
+  color: #757575;
+}
+
+.events-list .event-attendees {
+  font-size: 13px;
+  color: #757575;
+}
+
+.events-list .event-spots {
+  color: #e53935;
+  font-weight: 500;
+}
+
+.events-list .footer-separator {
+  color: #757575;
+}
+
+/* ====================================
+LOAD MORE
+======================================= */
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.load-more-btn {
+  padding: 10px 24px;
+  background-color: #f6f7f8;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #212121;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.load-more-btn:hover {
+  background-color: #ebecec;
+  border-color: #00798a;
+  color: #00798a;
+}
+
+/* ====================================
+DESKTOP
+======================================= */
+@media (min-width: 1024px) {
+  .events-main .container {
+    padding: 10px 18px 48px;
+  }
+
+  .events-header-section h1 {
+    font-size: 28px;
+  }
+
+  .filters-bar {
+    gap: 18px;
+    margin-bottom: 56px;
+    padding-bottom: 0;
+  }
+
+  .events-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .map-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-label {
+    font-size: 12px;
+    color: #212121;
+    font-weight: 500;
+  }
+
+  .map-city {
+    font-size: 20px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 14px;
+  }
+
+  .events-sidebar {
+    display: block;
+    position: sticky;
+    top: 24px;
+    width: 350px;
+  }
+
+  .map-container {
+    width: 350px;
+    height: 285px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
 }
