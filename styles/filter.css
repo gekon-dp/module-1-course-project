@@ -1,8 +1,3 @@
-/* .events-main {
-  background-color: #ffffff;
-  padding: 24px 0 48px;
-} */
-
 .events-main .container {
   max-width: 1196px;
   background-color: #ffffff;
@@ -46,11 +41,10 @@
   color: #00798a;
 }
 
-/* Бирюзовое подчеркивание активной вкладки */
 .events-tabs .tab-link.active::after {
   content: "";
   position: absolute;
-  bottom: -1px;
+  bottom: -1px; /* перекрывает рамку контейнера вкладок, чтобы линия прилегала вплотную */
   left: 0;
   width: 100%;
   height: 4px;
@@ -72,11 +66,11 @@ FILTER BAR
 .filters-bar {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: auto; /* Включаем горизонтальную прокрутку, если фильтры не помещаются в экран */
   gap: 20px;
   margin-bottom: 18px;
   padding-bottom: 10px;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; /* Включаем плавную инерционную прокрутку на мобильных устройствах iOS */
 }
 
 .filters-bar::-webkit-scrollbar {
@@ -96,9 +90,9 @@ FILTER BAR
 .filter-select {
   flex-shrink: 0;
   padding: 16px 42px 16px 16px;
-  text-indent: 2px; /* смещение текста, первая буква пряталась */
-  white-space: nowrap;
-  min-width: max-content;
+  text-indent: 2px; /* Смещение текста вправо, чтобы первая буква не прижималась к краю */
+  white-space: nowrap; /* Запрещаем перенос текста внутри селектора на новую строку */
+  min-width: max-content; /* Минимальная ширина по содержимому текста */
   border: none;
   border-radius: 40px;
   background-color: #f6f7f8;
@@ -106,14 +100,16 @@ FILTER BAR
   font-weight: 500;
   color: #212121;
   cursor: pointer;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
+  outline: none; /* Убираем стандартную обводку браузера при фокусе */
+  appearance: none; /* Сбрасываем стандартный системный дизайн селектора */
+  -webkit-appearance: none; /* Сброс стандартного вида для браузеров на движке WebKit (Safari/Chrome) */
+
+  /* Подключаем кастомную иконку стрелочки вниз через SVG в формате Data URI */
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23212121%22%20d%3D%22M7.41%208.59L12%2013.17l4.59-4.58L18%2010l-6%206-6-6%201.41-1.41z%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 14px;
-  transition: background-color 0.2s ease;
+  background-position: right 14px center; /* Позиционируем иконку справа с отступом 14px по центру по вертикали */
+  background-size: 14px; /* Устанавливаем размер SVG-иконки */
+  transition: background-color 0.2s ease; /* Плавный переход цвета фона при наведении */
 }
 
 .filter-select:hover {
@@ -132,7 +128,6 @@ MOBILE EVENTS LIST
 .events-list {
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
 }
 
 .events-sidebar {
@@ -213,7 +208,7 @@ MOBILE EVENTS LIST
   margin: 0;
 }
 
-/* ФУТЕР КАРТОЧКИ С ДОП. ПОЛЯМИ */
+/* футер доп. полей карточки */
 .events-list .event-footer {
   grid-area: footer;
   display: flex;

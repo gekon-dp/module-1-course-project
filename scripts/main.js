@@ -1,15 +1,18 @@
-// 1. Массив данных ивентов (добавлено свойство spotsLeft у одного из событий)
+// ==========================================
+// 1. ХРАНИЛИЩЕ ДАННЫХ (БАЗА ИВЕНТОВ)
+// ==========================================
+// Создаем массив объектов. Каждый объект описывает отдельное событие со всеми его свойствами.
 const eventsStore = [
   {
     title: "INFJ Personality Type - Coffee Shop Meet & Greet",
     description: "Being an INFJ",
-    date: new Date(2026, 2, 23, 15),
+    date: new Date(2026, 2, 23, 15), // Создаем объект даты (месяцы в JS считаются с 0: 2 = март)
     image:
       "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1037&auto=format&fit=crop",
-    type: "offline",
-    attendees: 99,
-    category: "Hobbies and Passions",
-    distance: 50,
+    type: "offline", // Тип события для фильтрации (online / offline)
+    attendees: 99, // Количество участников
+    category: "Hobbies and Passions", // Категория мероприятия
+    distance: 50, // Расстояние в км
   },
   {
     title:
@@ -22,7 +25,7 @@ const eventsStore = [
     attendees: 43,
     category: "Technology",
     distance: 25,
-    spotsLeft: 2, // Дополнительное свойство для отображения оставшихся мест
+    spotsLeft: 2, // Дополнительное свойство: осталось мест (опционально)
   },
   {
     title: "Book 40+ Appointments Per Month Using AI and Automation",
@@ -68,90 +71,119 @@ const eventsStore = [
   },
 ];
 
-// 2. Получение элементов DOM
-const typeSelect = document.getElementById("filter-type");
-const distanceSelect = document.getElementById("filter-distance");
-const timeSelect = document.getElementById("filter-time");
-const categorySelect = document.getElementById("filter-category");
-const eventsContainer = document.getElementById("events-container");
-const loadMoreBtn = document.getElementById("load-more-btn");
+// ==========================================
+// 2. ПОИСК ЭЛЕМЕНТОВ DOM (СВЯЗЬ С HTML)
+// ==========================================
+// Находим на странице элементы по их ID, чтобы управлять ими из скрипта
+const typeSelect = document.querySelector("#filter-type"); // Выпадающий список типов
+const distanceSelect = document.querySelector("#filter-distance"); // Выпадающий список расстояний
+const timeSelect = document.querySelector("#filter-time"); // Выпадающий список времени
+const categorySelect = document.querySelector("#filter-category"); // Выпадающий список категорий
+const eventsContainer = document.querySelector("#events-container"); // Контейнер, куда будут добавляться карточки
+const loadMoreBtn = document.querySelector("#load-more-btn"); // Кнопка пагинации «Load more»
 
-// Переменные состояния пагинации
-let currentVisibleCount = 3;
-let lastFilteredEvents = [];
+// Переменные состояния для пагинации (постраничного вывода)
+let currentVisibleCount = 3; // Сколько карточек отображается прямо сейчас (начинаем с 3)
+let lastFilteredEvents = []; // Здесь сохраняем результаты последней фильтрации, чтобы знать, что подгружать по кнопке
 
-// Форматирование даты
+// ==========================================
+// 3. УТИЛИТА ФОРМАТИРОВАНИЯ ДАТЫ
+// ==========================================
+// Принимает объект даты и возвращает красивую строку вида: "FRI, MAR 23, 3:00 PM EST"
 function formatDate(dateObj) {
   const options = {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
+    weekday: "short", // День недели коротко (Mon, Tue...)
+    month: "short", // Месяц коротко (Jan, Feb...)
+    day: "numeric", // Число месяца
+    hour: "numeric", // Часы
+    minute: "2-digit", // Минуты (всегда 2 знака)
+    timeZoneName: "short", // Часовой пояс
   };
+  // Превращаем дату в строку по стандарту США и делаем все буквы заглавными
   return dateObj.toLocaleDateString("en-US", options).toUpperCase();
 }
 
-// 3. Функция сортировки: предстоящие сверху, прошедшие внизу
+// ==========================================
+// 4. ФУНКЦИЯ СОРТИРОВКИ СОБЫТИЙ
+// ==========================================
+// Поднимает актуальные (предстоящие) события наверх, а прошедшие отправляет вниз
 function sortEvents(events) {
-  const now = new Date();
-  return [...events].sort((a, b) => {
-    const aIsPast = a.date < now;
-    const bIsPast = b.date < now;
+  const now = new Date(); // Текущая дата и время на компьютере пользователя
 
+  // Создаем копию массива через [...events], чтобы не портить оригинал, и сортируем методом .sort()
+  return [...events].sort((a, b) => {
+    const aIsPast = a.date < now; // Прошло ли событие 'a'? (true/false)
+    const bIsPast = b.date < now; // Прошло ли событие 'b'? (true/false)
+
+    // Если 'a' прошло, а 'b' нет — ставим 'a' ниже (возвращаем 1)
     if (aIsPast && !bIsPast) return 1;
+    // Если 'b' прошло, а 'a' нет — ставим 'b' ниже (возвращаем -1)
     if (!aIsPast && bIsPast) return -1;
 
+    // Если оба события в будущем или оба в прошлом — сортируем их по хронологии (ближайшие сверху)
     return a.date - b.date;
   });
 }
 
-// 4. Динамический рендеринг карточек
+// ==========================================
+// 5. ДИНАМИЧЕСКИЙ РЕНДЕРИНГ (ОТРИСОВКА) КАРТОЧЕК
+// ==========================================
+// Принимает массив событий и флаг сброса лимита карточек
 function renderEvents(eventsToRender, resetLimit = false) {
-  if (!eventsContainer) return;
+  if (!eventsContainer) return; // Если контейнера на странице нет — прерываем выполнение, чтобы не было ошибки
 
+  // Если передан флаг сброса, возвращаем видимый лимит к исходным 3 карточкам
   if (resetLimit) {
     currentVisibleCount = 3;
   }
 
+  // Запоминаем текущий отфильтрованный массив в глобальную переменную
   lastFilteredEvents = eventsToRender;
+  // Очищаем контейнер перед отрисовкой новых карточек
   eventsContainer.innerHTML = "";
 
+  // Если после фильтрации ничего не нашлось — показываем сообщение пользователю
   if (eventsToRender.length === 0) {
     eventsContainer.innerHTML =
       '<p class="no-results" style="padding: 20px; color: #757575;">No events found matching your criteria.</p>';
-    if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    if (loadMoreBtn) loadMoreBtn.style.display = "none"; // Скрываем кнопку «Load more»
     return;
   }
 
   const now = new Date();
+  // Берем из массива только то количество элементов, которое разрешено переменной currentVisibleCount
   const eventsToShow = eventsToRender.slice(0, currentVisibleCount);
 
+  // Проходимся циклом по каждому событию из среза и создаем для него HTML-карточку
   eventsToShow.forEach((event) => {
-    const card = document.createElement("div");
-    const isPast = event.date < now;
+    const card = document.createElement("div"); // Создаем пустой тег <div>
+    const isPast = event.date < now; // Проверяем, прошло ли событие
+    // Назначаем класс: если прошло — добавляем модификатор "event-past" (для серого стиля)
     card.className = isPast ? "event event-past" : "event";
 
-    // Формирование опциональных тегов (универсальный класс event-attendees)
+    // Условие: если у объекта есть участники, формируем HTML-строку, иначе пустая строка
     const attendeesHtml = event.attendees
       ? `<span class="event-attendees">${event.attendees} attendees</span>`
       : "";
 
+    // Условие: если указаны и участники, и оставшиеся места, добавляем разделитель "·"
     const separatorHtml =
       event.attendees && event.spotsLeft
         ? `<span class="footer-separator">·</span>`
         : "";
 
+    // Условие: если есть свойство spotsLeft, выводим предупреждение об оставшихся местах
     const spotsHtml = event.spotsLeft
       ? `<span class="event-spots">${event.spotsLeft} spots left</span>`
       : "";
 
+    // Условие: если событие онлайн, создаем бейдж с иконкой видео
     const badgeHtml =
       event.type === "online"
         ? `<div class="badge-desktop"><i class="fa-solid fa-video"></i> Online Event</div>`
         : "";
 
+    // Заполняем созданный div готовой HTML-разметкой карточки с помощью шаблонных строк (бектиков)
     card.innerHTML = `
       <div class="event-image-wrapper">
         <img src="${event.image}" alt="${event.title}" />
@@ -168,10 +200,12 @@ function renderEvents(eventsToRender, resetLimit = false) {
         ${spotsHtml}
       </div>
     `;
+    // Вставляем готовую карточку внутрь общего контейнера на странице
     eventsContainer.appendChild(card);
   });
 
-  // Управление кнопкой «Load more»
+  // Логика управления видимостью кнопки «Load more»:
+  // Если показаны еще не все отфильтрованные карточки — показываем кнопку, иначе скрываем
   if (loadMoreBtn) {
     if (currentVisibleCount < eventsToRender.length) {
       loadMoreBtn.style.display = "block";
@@ -181,28 +215,40 @@ function renderEvents(eventsToRender, resetLimit = false) {
   }
 }
 
-// 5. Логика фильтрации
+// ==========================================
+// 6. ЛОГИКА МНОГОКРИТЕРИАЛЬНОЙ ФИЛЬТРАЦИИ
+// ==========================================
+// Срабатывает каждый раз, когда пользователь меняет значение в любом выпадающем списке
 function filterEvents() {
+  // Считываем выбранные значения из всех селекторов (если элемент существует)
   const selectedType = typeSelect ? typeSelect.value : "";
   const selectedDistance =
     distanceSelect && distanceSelect.value
-      ? Number(distanceSelect.value)
+      ? Number(distanceSelect.value) // Превращаем строку из селектора в число
       : null;
   const selectedTime = timeSelect ? timeSelect.value : "";
   const selectedCategory = categorySelect ? categorySelect.value : "";
 
   const now = new Date();
 
+  // Метод .filter() создает новый массив, оставляя в нем только те элементы, которые прошли все проверки (вернули true)
   const filtered = eventsStore.filter((event) => {
+    // 1. Проверка по типу (online / offline)
     if (selectedType && event.type !== selectedType) return false;
+
+    // 2. Проверка по расстоянию (если событие дальше выбранного лимита — отсеиваем)
     if (selectedDistance !== null && event.distance > selectedDistance)
       return false;
+
+    // 3. Проверка по категории
     if (selectedCategory && event.category !== selectedCategory) return false;
 
+    // 4. Сложная проверка по временным интервалам (если выбран фильтр времени)
     if (selectedTime) {
       const eventDate = new Date(event.date);
 
       if (selectedTime === "today") {
+        // Проверяем, совпадает ли день, месяц и год события с сегодняшним днем
         if (
           eventDate.getDate() !== now.getDate() ||
           eventDate.getMonth() !== now.getMonth() ||
@@ -211,6 +257,7 @@ function filterEvents() {
           return false;
         }
       } else if (selectedTime === "this-week") {
+        // Вычисляем границы текущей недели (с воскресенья/понедельника по субботу)
         const startOfWeek = new Date(now);
         startOfWeek.setDate(now.getDate() - now.getDay());
         startOfWeek.setHours(0, 0, 0, 0);
@@ -223,6 +270,7 @@ function filterEvents() {
           return false;
         }
       } else if (selectedTime === "this-month") {
+        // Проверяем совпадение месяца и года
         if (
           eventDate.getMonth() !== now.getMonth() ||
           eventDate.getFullYear() !== now.getFullYear()
@@ -230,64 +278,82 @@ function filterEvents() {
           return false;
         }
       } else if (selectedTime === "this-year") {
+        // Проверяем текущий год
         if (eventDate.getFullYear() !== now.getFullYear()) {
           return false;
         }
       } else if (selectedTime === "next-year") {
+        // Проверяем следующий год
         if (eventDate.getFullYear() !== now.getFullYear() + 1) {
           return false;
         }
       } else if (selectedTime === "last-year") {
+        // Проверяем прошлый год
         if (eventDate.getFullYear() !== now.getFullYear() - 1) {
           return false;
         }
       }
     }
 
-    return true;
+    return true; // Если событие прошло все проверки, оставляем его в массиве
   });
 
+  // Сортируем отфильтрованный массив и заново отрисовываем карточки, сбрасывая лимит пагинации на 3
   renderEvents(sortEvents(filtered), true);
 }
 
-// 6. Обработчик клика по «Load more»
+// ==========================================
+// 7. ОБРАБОТЧИК КЛИКА ПО КНОПКЕ «LOAD MORE»
+// ==========================================
 if (loadMoreBtn) {
   loadMoreBtn.addEventListener("click", () => {
-    currentVisibleCount += 3;
-    renderEvents(lastFilteredEvents, false);
+    currentVisibleCount += 3; // Увеличиваем лимит видимых карточек еще на 3
+    renderEvents(lastFilteredEvents, false); // Перерисовываем карточки без сброса лимита
   });
 }
 
-// 7. Подключение слушателей событий
+// ==========================================
+// 8. ПОДКЛЮЧЕНИЕ СЛУШАТЕЛЕЙ СОБЫТИЙ К СЕЛЕКТОРАМ
+// ==========================================
+// Проходим циклом по всем элементам фильтрации и вешаем событие "change" (изменение выбора)
 [typeSelect, distanceSelect, timeSelect, categorySelect].forEach((select) => {
   if (select) {
-    select.addEventListener("change", filterEvents);
+    select.addEventListener("change", filterEvents); // При изменении вызываем функцию фильтрации
   }
 });
 
-// 8. Стартовая инициализация с первой сортировкой
+// ==========================================
+// 9. СТАРТОВАЯ ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ
+// ==========================================
+// Сразу при открытии страницы сортируем исходный массив и отрисовываем первые 3 карточки
 renderEvents(sortEvents(eventsStore), true);
 
-// Логика переключения вкладок
-const tabLinks = document.querySelectorAll(".tab-link");
-const tabPanes = document.querySelectorAll(".tab-pane");
+// ==========================================
+// 10. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК (Events / Members)
+// ==========================================
+const tabLinks = document.querySelectorAll(".tab-link"); // Все кнопки вкладок
+const tabPanes = document.querySelectorAll(".tab-pane"); // Все панели с контентом
 
+// Вешаем клик на каждую кнопку вкладки
 tabLinks.forEach((link) => {
   link.addEventListener("click", () => {
-    // Убираем активный класс у всех кнопок
+    // 1. Убираем активный класс у всех кнопок
     tabLinks.forEach((item) => item.classList.remove("active"));
-    // Скрываем все панели контента
+
+    // 2. Скрываем все панели контента (делаем display: none)
     tabPanes.forEach((pane) => {
       pane.classList.remove("active");
       pane.style.display = "none";
     });
 
-    // Активируем выбранную кнопку
+    // 3. Добавляем активный класс на ту кнопку, на которую кликнули
     link.classList.add("active");
 
-    // Находим и показываем соответствующую панель
+    // 4. Считываем атрибут data-target с нужной вкладки и находим соответствующую панель
     const targetId = link.getAttribute("data-target");
     const targetPane = document.getElementById(targetId);
+
+    // 5. Если панель найдена, активируем ее и показываем на экране
     if (targetPane) {
       targetPane.classList.add("active");
       targetPane.style.display = "block";
