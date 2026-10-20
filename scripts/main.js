@@ -66,6 +66,10 @@ const eventsStore = [
   },
 ];
 
+const typeSelect = document.getElementById("filter-type");
+const distanceSelect = document.getElementById("filter-distance");
+const timeSelect = document.getElementById("filter-time");
+const categorySelect = document.getElementById("filter-category");
 const eventsContainer = document.getElementById("events-container");
 
 function formatDate(dateObj) {
@@ -78,6 +82,17 @@ function formatDate(dateObj) {
     timeZoneName: "short",
   };
   return dateObj.toLocaleDateString("en-US", options).toUpperCase();
+}
+
+function sortEvents(events) {
+  const now = new Date();
+  return [...events].sort((a, b) => {
+    const aIsPast = a.date < now;
+    const bIsPast = b.date < now;
+    if (aIsPast && !bIsPast) return 1;
+    if (!aIsPast && bIsPast) return -1;
+    return a.date - b.date;
+  });
 }
 
 function renderEvents(eventsToRender) {
@@ -100,4 +115,29 @@ function renderEvents(eventsToRender) {
   });
 }
 
-renderEvents(eventsStore);
+function filterEvents() {
+  const selectedType = typeSelect ? typeSelect.value : "";
+  const selectedDistance =
+    distanceSelect && distanceSelect.value
+      ? Number(distanceSelect.value)
+      : null;
+  const selectedCategory = categorySelect ? categorySelect.value : "";
+
+  const filtered = eventsStore.filter((event) => {
+    if (selectedType && event.type !== selectedType) return false;
+    if (selectedDistance !== null && event.distance > selectedDistance)
+      return false;
+    if (selectedCategory && event.category !== selectedCategory) return false;
+    return true;
+  });
+
+  renderEvents(sortEvents(filtered));
+}
+
+[typeSelect, distanceSelect, timeSelect, categorySelect].forEach((select) => {
+  if (select) {
+    select.addEventListener("change", filterEvents);
+  }
+});
+
+renderEvents(sortEvents(eventsStore));
