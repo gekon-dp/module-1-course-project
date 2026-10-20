@@ -2,9 +2,9 @@ const eventsStore = [
   {
     title: "INFJ Personality Type - Coffee Shop Meet & Greet",
     description: "Being an INFJ",
-    date: new Date(2024, 2, 23, 15),
+    date: new Date(2026, 2, 23, 15),
     image:
-      "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1037&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D%201037w ",
+      "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1037&auto=format&fit=crop",
     type: "offline",
     attendees: 99,
     category: "Hobbies and Passions",
@@ -14,20 +14,21 @@ const eventsStore = [
     title:
       "NYC AI Users - AI Tech Talks, Demo & Social: RAG Search and Customer Experience",
     description: "New York AI Users",
-    date: new Date(2024, 2, 23, 11, 30),
+    date: new Date(2027, 2, 23, 11, 30),
     image:
-      "https://images.unsplash.com/photo-1696258686454-60082b2c33e2?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ",
+      "https://images.unsplash.com/photo-1696258686454-60082b2c33e2?q=80&w=870&auto=format&fit=crop",
     type: "offline",
     attendees: 43,
     category: "Technology",
     distance: 25,
+    spotsLeft: 2,
   },
   {
     title: "Book 40+ Appointments Per Month Using AI and Automation",
     description: "New Jersey Business Network",
-    date: new Date(2024, 2, 16, 14),
+    date: new Date(2027, 2, 16, 14),
     image:
-      "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?q=80&w=1032&auto=format&fit=crop",
     type: "online",
     category: "Technology",
     distance: 10,
@@ -35,9 +36,9 @@ const eventsStore = [
   {
     title: "Dump writing group weekly meetup",
     description: "Dump writing group",
-    date: new Date(2024, 2, 13, 11),
+    date: new Date(2026, 2, 13, 11),
     image:
-      "https://plus.unsplash.com/premium_photo-1678453146992-b80d66df9152?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1678453146992-b80d66df9152?q=80&w=870&auto=format&fit=crop",
     type: "online",
     attendees: 77,
     category: "Business",
@@ -46,9 +47,9 @@ const eventsStore = [
   {
     title: "Over 40s, 50s, & 60s Senior Singles Chat, Meet & Dating Community",
     description: "Over 40s, 50s, 60s Singles Chat, Meet & Dating Community",
-    date: new Date(2024, 2, 14, 11),
+    date: new Date(2026, 2, 14, 11),
     image:
-      "https://plus.unsplash.com/premium_photo-1706005542509-a460d6efecb0?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1706005542509-a460d6efecb0?q=80&w=870&auto=format&fit=crop",
     type: "online",
     attendees: 140,
     category: "Social Activities",
@@ -57,9 +58,9 @@ const eventsStore = [
   {
     title: "All Nations - Manhattan Missions Church Bible Study",
     description: "Manhattan Bible Study Meetup Group",
-    date: new Date(2024, 2, 14, 11),
+    date: new Date(2026, 2, 14, 11),
     image:
-      "https://plus.unsplash.com/premium_photo-1679488248784-65a638a3d3fc?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1679488248784-65a638a3d3fc?q=80&w=870&auto=format&fit=crop",
     type: "offline",
     category: "Health and Wellbeing",
     distance: 15,
@@ -71,6 +72,10 @@ const distanceSelect = document.getElementById("filter-distance");
 const timeSelect = document.getElementById("filter-time");
 const categorySelect = document.getElementById("filter-category");
 const eventsContainer = document.getElementById("events-container");
+const loadMoreBtn = document.getElementById("load-more-btn");
+
+let currentVisibleCount = 3;
+let lastFilteredEvents = [];
 
 function formatDate(dateObj) {
   const options = {
@@ -95,24 +100,69 @@ function sortEvents(events) {
   });
 }
 
-function renderEvents(eventsToRender) {
+function renderEvents(eventsToRender, resetLimit = false) {
   if (!eventsContainer) return;
-  eventsContainer.innerHTML = "";
-  const now = new Date();
 
-  eventsToRender.forEach((event) => {
+  if (resetLimit) {
+    currentVisibleCount = 3;
+  }
+
+  lastFilteredEvents = eventsToRender;
+  eventsContainer.innerHTML = "";
+
+  if (eventsToRender.length === 0) {
+    eventsContainer.innerHTML =
+      '<p class="no-results" style="padding: 20px; color: #757575;">No events found matching your criteria.</p>';
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    return;
+  }
+
+  const now = new Date();
+  const eventsToShow = eventsToRender.slice(0, currentVisibleCount);
+
+  eventsToShow.forEach((event) => {
     const card = document.createElement("div");
     const isPast = event.date < now;
     card.className = isPast ? "event event-past" : "event";
+
+    const attendeesHtml = event.attendees
+      ? `<span class="event-attendees">${event.attendees} attendees</span>`
+      : "";
+
+    const separatorHtml =
+      event.attendees && event.spotsLeft
+        ? `<span class="footer-separator">·</span>`
+        : "";
+
+    const spotsHtml = event.spotsLeft
+      ? `<span class="event-spots">${event.spotsLeft} spots left</span>`
+      : "";
+
     card.innerHTML = `
       <div class="event-image-wrapper">
         <img src="${event.image}" alt="${event.title}" />
       </div>
-      <div class="event-date"><span>${formatDate(event.date)}</span></div>
+      <div class="event-date">
+        <span>${formatDate(event.date)}</span>
+      </div>
       <h3 class="event-title">${event.title}</h3>
+      <div class="event-theme">${event.category} (${event.distance} km)</div>
+      <div class="event-footer">
+        ${attendeesHtml}
+        ${separatorHtml}
+        ${spotsHtml}
+      </div>
     `;
     eventsContainer.appendChild(card);
   });
+
+  if (loadMoreBtn) {
+    if (currentVisibleCount < eventsToRender.length) {
+      loadMoreBtn.style.display = "block";
+    } else {
+      loadMoreBtn.style.display = "none";
+    }
+  }
 }
 
 function filterEvents() {
@@ -131,7 +181,14 @@ function filterEvents() {
     return true;
   });
 
-  renderEvents(sortEvents(filtered));
+  renderEvents(sortEvents(filtered), true);
+}
+
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => {
+    currentVisibleCount += 3;
+    renderEvents(lastFilteredEvents, false);
+  });
 }
 
 [typeSelect, distanceSelect, timeSelect, categorySelect].forEach((select) => {
@@ -140,4 +197,27 @@ function filterEvents() {
   }
 });
 
-renderEvents(sortEvents(eventsStore));
+// Логика переключения вкладок
+const tabLinks = document.querySelectorAll(".tab-link");
+const tabPanes = document.querySelectorAll(".tab-pane");
+
+tabLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    tabLinks.forEach((item) => item.classList.remove("active"));
+    tabPanes.forEach((pane) => {
+      pane.classList.remove("active");
+      pane.style.display = "none";
+    });
+
+    link.classList.add("active");
+
+    const targetId = link.getAttribute("data-target");
+    const targetPane = document.getElementById(targetId);
+    if (targetPane) {
+      targetPane.classList.add("active");
+      targetPane.style.display = "block";
+    }
+  });
+});
+
+renderEvents(sortEvents(eventsStore), true);

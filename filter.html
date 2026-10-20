@@ -49,43 +49,67 @@
     <!-- Основной контент страницы -->
     <main class="events-main">
         <div class="container">
-            <!-- Панель фильтров-капсул -->
-            <div class="filters-bar">
-                <select id="filter-type" class="filter-select">
-                    <option value="">Any type</option>
-                    <option value="online">Online</option>
-                    <option value="offline">Offline</option>
-                </select>
-
-                <select id="filter-distance" class="filter-select">
-                    <option value="">Any distance</option>
-                    <option value="10">10 km</option>
-                    <option value="25">25 km</option>
-                    <option value="50">50 km</option>
-                    <option value="100">100 km</option>
-                </select>
-
-                <select id="filter-category" class="filter-select">
-                    <option value="">Any category</option>
-                    <option value="Hobbies and Passions">Hobbies and Passions</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Business">Business</option>
-                    <option value="Social Activities">Social Activities</option>
-                    <option value="Health and Wellbeing">Health and Wellbeing</option>
-                </select>
-
-                <select id="filter-time" class="filter-select">
-                    <option value="">Any time</option>
-                    <option value="today">Today</option>
-                    <option value="this-week">This week</option>
-                    <option value="this-month">This month</option>
-                    <option value="this-year">This year</option>
-                    <option value="next-year">Next year</option>
-                    <option value="last-year">Last year</option>
-                </select>
+            <div class="events-header-section">
+                <h1>Events near New York, NY</h1>
+                <div class="events-tabs">
+                    <button class="tab-link active" data-target="events-pane">Events</button>
+                    <button class="tab-link" data-target="empty-pane">Members</button>
+                </div>
             </div>
 
-            <div class="events-list" id="events-container"></div>
+            <!-- Вкладка 1: Ивенты (Фильтры + Список + Кнопка) -->
+            <div id="events-pane" class="tab-pane active">
+                <!-- Панель фильтров-капсул -->
+                <div class="filters-bar">
+                    <select id="filter-type" class="filter-select">
+                        <option value="">Any type</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+
+                    <select id="filter-distance" class="filter-select">
+                        <option value="">Any distance</option>
+                        <option value="10">10 km</option>
+                        <option value="25">25 km</option>
+                        <option value="50">50 km</option>
+                        <option value="100">100 km</option>
+                    </select>
+
+                    <select id="filter-category" class="filter-select">
+                        <option value="">Any category</option>
+                        <option value="Hobbies and Passions">Hobbies and Passions</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                        <option value="Social Activities">Social Activities</option>
+                        <option value="Health and Wellbeing">Health and Wellbeing</option>
+                    </select>
+
+                    <select id="filter-time" class="filter-select">
+                        <option value="">Any time</option>
+                        <option value="today">Today</option>
+                        <option value="this-week">This week</option>
+                        <option value="this-month">This month</option>
+                        <option value="this-year">This year</option>
+                        <option value="next-year">Next year</option>
+                        <option value="last-year">Last year</option>
+                    </select>
+                </div>
+
+                <!-- Динамический список ивентов -->
+                <div class="events-list" id="events-container"></div>
+
+                <!-- Кнопка «Загрузить еще» -->
+                <div class="load-more-wrapper">
+                    <button id="load-more-btn" class="load-more-btn">Load more</button>
+                </div>
+            </div>
+
+            <!-- Вкладка 2: Содержимое пустой вкладки -->
+            <div id="empty-pane" class="tab-pane" style="display: none;">
+                <p class="empty-tab-message" style="padding: 40px 0; color: #757575; font-size: 15px;">
+                    This tab is currently empty.
+                </p>
+            </div>
         </div>
     </main>
 
