@@ -50,6 +50,42 @@
     <!-- Основной контент страницы -->
     <main class="events-main">
         <div class="container">
+            <!-- Панель фильтров-капсул -->
+            <div class="filters-bar">
+                <select id="filter-type" class="filter-select">
+                    <option value="">Any type</option>
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                </select>
+
+                <select id="filter-distance" class="filter-select">
+                    <option value="">Any distance</option>
+                    <option value="10">10 km</option>
+                    <option value="25">25 km</option>
+                    <option value="50">50 km</option>
+                    <option value="100">100 km</option>
+                </select>
+
+                <select id="filter-category" class="filter-select">
+                    <option value="">Any category</option>
+                    <option value="Hobbies and Passions">Hobbies and Passions</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Business">Business</option>
+                    <option value="Social Activities">Social Activities</option>
+                    <option value="Health and Wellbeing">Health and Wellbeing</option>
+                </select>
+
+                <select id="filter-time" class="filter-select">
+                    <option value="">Any time</option>
+                    <option value="today">Today</option>
+                    <option value="this-week">This week</option>
+                    <option value="this-month">This month</option>
+                    <option value="this-year">This year</option>
+                    <option value="next-year">Next year</option>
+                    <option value="last-year">Last year</option>
+                </select>
+            </div>
+
             <div class="events-list" id="events-container"></div>
         </div>
     </main>
