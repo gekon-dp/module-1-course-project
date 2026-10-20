@@ -1,8 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* .events-main {
+  background-color: #ffffff;
+  padding: 24px 0 48px;
+} */
 
 .events-main .container {
   max-width: 1196px;
@@ -67,6 +66,9 @@
   display: block;
 }
 
+/* ====================================
+FILTER BAR
+======================================= */
 .filters-bar {
   display: flex;
   flex-wrap: nowrap;
@@ -94,7 +96,7 @@
 .filter-select {
   flex-shrink: 0;
   padding: 16px 42px 16px 16px;
-  text-indent: 2px;
+  text-indent: 2px; /* смещение текста, первая буква пряталась */
   white-space: nowrap;
   min-width: max-content;
   border: none;
@@ -118,6 +120,9 @@
   background-color: #ebecec;
 }
 
+/* ====================================
+MOBILE EVENTS LIST
+======================================= */
 .events-page-grid {
   display: flex;
   flex-direction: column;
@@ -127,6 +132,7 @@
 .events-list {
   display: flex;
   flex-direction: column;
+  /* gap: 20px; */
 }
 
 .events-sidebar {
@@ -146,9 +152,95 @@
   align-items: start;
   padding: 16px 0;
   border-top: 1px solid #e0e0e0;
+  background-color: transparent;
   cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
+.events-list .event:hover {
+  transform: none;
+}
+
+/* Стили для прошедших ивентов */
+.events-list .event.event-past {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.events-list .event.event-past:hover {
+  transform: none;
+  cursor: default;
+}
+
+.events-list .event-image-wrapper {
+  position: relative;
+  grid-area: img;
+  width: 100%;
+  height: 100px;
+}
+
+.events-list .event-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.events-list .event-date {
+  grid-area: date;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7c6f50;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.events-list .event-title {
+  grid-area: title;
+  font-size: 16px;
+  font-weight: 700;
+  color: #212121;
+  line-height: 1.3;
+  margin: 2px 0 4px 0;
+}
+
+.events-list .event-theme {
+  grid-area: theme;
+  font-size: 13px;
+  color: #707070;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ФУТЕР КАРТОЧКИ С ДОП. ПОЛЯМИ */
+.events-list .event-footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  font-size: 13px;
+  color: #757575;
+}
+
+.events-list .event-attendees {
+  font-size: 13px;
+  color: #757575;
+}
+
+.events-list .event-spots {
+  color: #e53935;
+  font-weight: 500;
+}
+
+.events-list .footer-separator {
+  color: #757575;
+}
+
+/* ====================================
+LOAD MORE
+======================================= */
 .load-more-wrapper {
   display: flex;
   justify-content: center;
@@ -164,25 +256,73 @@
   font-weight: 600;
   color: #212121;
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
+.load-more-btn:hover {
+  background-color: #ebecec;
+  border-color: #00798a;
+  color: #00798a;
+}
+
+/* ====================================
+DESKTOP
+======================================= */
 @media (min-width: 1024px) {
+  .events-main .container {
+    padding: 10px 18px 48px;
+  }
+
+  .events-header-section h1 {
+    font-size: 28px;
+  }
+
+  .filters-bar {
+    gap: 18px;
+    margin-bottom: 56px;
+    padding-bottom: 0;
+  }
+
   .events-page-grid {
     display: grid;
     grid-template-columns: 1fr 350px;
     gap: 40px;
     align-items: start;
   }
+
+  .map-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-label {
+    font-size: 12px;
+    color: #212121;
+    font-weight: 500;
+  }
+
+  .map-city {
+    font-size: 20px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 14px;
+  }
+
   .events-sidebar {
     display: block;
     position: sticky;
     top: 24px;
     width: 350px;
   }
+
   .map-container {
     width: 350px;
     height: 285px;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   }
 }

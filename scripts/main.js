@@ -1,3 +1,4 @@
+// 1. Массив данных ивентов (добавлено свойство spotsLeft у одного из событий)
 const eventsStore = [
   {
     title: "INFJ Personality Type - Coffee Shop Meet & Greet",
@@ -21,7 +22,7 @@ const eventsStore = [
     attendees: 43,
     category: "Technology",
     distance: 25,
-    spotsLeft: 2,
+    spotsLeft: 2, // Дополнительное свойство для отображения оставшихся мест
   },
   {
     title: "Book 40+ Appointments Per Month Using AI and Automation",
@@ -67,6 +68,7 @@ const eventsStore = [
   },
 ];
 
+// 2. Получение элементов DOM
 const typeSelect = document.getElementById("filter-type");
 const distanceSelect = document.getElementById("filter-distance");
 const timeSelect = document.getElementById("filter-time");
@@ -74,9 +76,11 @@ const categorySelect = document.getElementById("filter-category");
 const eventsContainer = document.getElementById("events-container");
 const loadMoreBtn = document.getElementById("load-more-btn");
 
+// Переменные состояния пагинации
 let currentVisibleCount = 3;
 let lastFilteredEvents = [];
 
+// Форматирование даты
 function formatDate(dateObj) {
   const options = {
     weekday: "short",
@@ -89,17 +93,21 @@ function formatDate(dateObj) {
   return dateObj.toLocaleDateString("en-US", options).toUpperCase();
 }
 
+// 3. Функция сортировки: предстоящие сверху, прошедшие внизу
 function sortEvents(events) {
   const now = new Date();
   return [...events].sort((a, b) => {
     const aIsPast = a.date < now;
     const bIsPast = b.date < now;
+
     if (aIsPast && !bIsPast) return 1;
     if (!aIsPast && bIsPast) return -1;
+
     return a.date - b.date;
   });
 }
 
+// 4. Динамический рендеринг карточек
 function renderEvents(eventsToRender, resetLimit = false) {
   if (!eventsContainer) return;
 
@@ -125,6 +133,7 @@ function renderEvents(eventsToRender, resetLimit = false) {
     const isPast = event.date < now;
     card.className = isPast ? "event event-past" : "event";
 
+    // Формирование опциональных тегов (универсальный класс event-attendees)
     const attendeesHtml = event.attendees
       ? `<span class="event-attendees">${event.attendees} attendees</span>`
       : "";
@@ -138,9 +147,15 @@ function renderEvents(eventsToRender, resetLimit = false) {
       ? `<span class="event-spots">${event.spotsLeft} spots left</span>`
       : "";
 
+    const badgeHtml =
+      event.type === "online"
+        ? `<div class="badge-desktop"><i class="fa-solid fa-video"></i> Online Event</div>`
+        : "";
+
     card.innerHTML = `
       <div class="event-image-wrapper">
         <img src="${event.image}" alt="${event.title}" />
+        ${badgeHtml}
       </div>
       <div class="event-date">
         <span>${formatDate(event.date)}</span>
@@ -156,6 +171,7 @@ function renderEvents(eventsToRender, resetLimit = false) {
     eventsContainer.appendChild(card);
   });
 
+  // Управление кнопкой «Load more»
   if (loadMoreBtn) {
     if (currentVisibleCount < eventsToRender.length) {
       loadMoreBtn.style.display = "block";
@@ -165,25 +181,76 @@ function renderEvents(eventsToRender, resetLimit = false) {
   }
 }
 
+// 5. Логика фильтрации
 function filterEvents() {
   const selectedType = typeSelect ? typeSelect.value : "";
   const selectedDistance =
     distanceSelect && distanceSelect.value
       ? Number(distanceSelect.value)
       : null;
+  const selectedTime = timeSelect ? timeSelect.value : "";
   const selectedCategory = categorySelect ? categorySelect.value : "";
+
+  const now = new Date();
 
   const filtered = eventsStore.filter((event) => {
     if (selectedType && event.type !== selectedType) return false;
     if (selectedDistance !== null && event.distance > selectedDistance)
       return false;
     if (selectedCategory && event.category !== selectedCategory) return false;
+
+    if (selectedTime) {
+      const eventDate = new Date(event.date);
+
+      if (selectedTime === "today") {
+        if (
+          eventDate.getDate() !== now.getDate() ||
+          eventDate.getMonth() !== now.getMonth() ||
+          eventDate.getFullYear() !== now.getFullYear()
+        ) {
+          return false;
+        }
+      } else if (selectedTime === "this-week") {
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        startOfWeek.setHours(0, 0, 0, 0);
+
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 7);
+        endOfWeek.setHours(23, 59, 59, 999);
+
+        if (eventDate < startOfWeek || eventDate > endOfWeek) {
+          return false;
+        }
+      } else if (selectedTime === "this-month") {
+        if (
+          eventDate.getMonth() !== now.getMonth() ||
+          eventDate.getFullYear() !== now.getFullYear()
+        ) {
+          return false;
+        }
+      } else if (selectedTime === "this-year") {
+        if (eventDate.getFullYear() !== now.getFullYear()) {
+          return false;
+        }
+      } else if (selectedTime === "next-year") {
+        if (eventDate.getFullYear() !== now.getFullYear() + 1) {
+          return false;
+        }
+      } else if (selectedTime === "last-year") {
+        if (eventDate.getFullYear() !== now.getFullYear() - 1) {
+          return false;
+        }
+      }
+    }
+
     return true;
   });
 
   renderEvents(sortEvents(filtered), true);
 }
 
+// 6. Обработчик клика по «Load more»
 if (loadMoreBtn) {
   loadMoreBtn.addEventListener("click", () => {
     currentVisibleCount += 3;
@@ -191,11 +258,15 @@ if (loadMoreBtn) {
   });
 }
 
+// 7. Подключение слушателей событий
 [typeSelect, distanceSelect, timeSelect, categorySelect].forEach((select) => {
   if (select) {
     select.addEventListener("change", filterEvents);
   }
 });
+
+// 8. Стартовая инициализация с первой сортировкой
+renderEvents(sortEvents(eventsStore), true);
 
 // Логика переключения вкладок
 const tabLinks = document.querySelectorAll(".tab-link");
@@ -203,14 +274,18 @@ const tabPanes = document.querySelectorAll(".tab-pane");
 
 tabLinks.forEach((link) => {
   link.addEventListener("click", () => {
+    // Убираем активный класс у всех кнопок
     tabLinks.forEach((item) => item.classList.remove("active"));
+    // Скрываем все панели контента
     tabPanes.forEach((pane) => {
       pane.classList.remove("active");
       pane.style.display = "none";
     });
 
+    // Активируем выбранную кнопку
     link.classList.add("active");
 
+    // Находим и показываем соответствующую панель
     const targetId = link.getAttribute("data-target");
     const targetPane = document.getElementById(targetId);
     if (targetPane) {
@@ -219,5 +294,3 @@ tabLinks.forEach((link) => {
     }
   });
 });
-
-renderEvents(sortEvents(eventsStore), true);
