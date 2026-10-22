@@ -117,13 +117,13 @@ HEADER SECTION (Mobile-First)
   color: #212121;
 }
 
-.singup-btn {
+.signup-btn {
   background-color: #00798a !important;
   color: #ffffff !important;
   padding: 7px 14px !important;
 }
 
-.singup-btn:hover {
+.signup-btn:hover {
   background-color: #005f6b !important;
 }
 
@@ -322,7 +322,7 @@ DESKTOP HEADER
     border-radius: 8px;
   }
 
-  .singup-btn {
+  .signup-btn {
     padding: 8px 16px !important;
   }
 }
@@ -984,6 +984,7 @@ CATEGORIES
   gap: 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  border-radius: 8px;
 }
 
 .category-card:hover {
@@ -1063,6 +1064,11 @@ CATEGORIES
   }
 }
 
+@media (min-width: 1240px) {
+  .categories {
+    padding: 64px 0;
+  }
+}
 /* ====================================
 POPULAR CITIES
 ======================================= */
@@ -1163,6 +1169,7 @@ POPULAR CITIES
     font-size: 20px; /* Чуть компактнее на десктопе, если карточек много */
   }
 }
+
 /* ====================================
 HOW MEETUP WORKS (FAQ)
 ======================================= */
@@ -1588,6 +1595,10 @@ FOOTER
 FOOTER DESKTOP
 ======================================= */
 @media (min-width: 768px) {
+  .footer .container {
+    max-width: 1120px;
+  }
+
   .footer .social-links-row {
     flex-direction: row;
     justify-content: space-between;

@@ -92,7 +92,8 @@ FILTER BAR
   padding: 16px 42px 16px 16px;
   text-indent: 2px; /* Смещение текста вправо, чтобы первая буква не прижималась к краю */
   white-space: nowrap; /* Запрещаем перенос текста внутри селектора на новую строку */
-  min-width: max-content; /* Минимальная ширина по содержимому текста */
+  width: auto;
+  field-sizing: content; /* Заставляет Chrome идеально рассчитывать отступы */
   border: none;
   border-radius: 40px;
   background-color: #f6f7f8;
